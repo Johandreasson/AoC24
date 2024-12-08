@@ -1,6 +1,6 @@
 import re
 
-with open(r'C:\Users\JANDRE21\projects\.vscode\AoC24\3\input.txt', "r") as f:
+with open(r'path/to/input.txt', "r") as f:
     memory = f.read()
 
     multiples = re.findall(r'(mul\(\d+,\d+\)|do\(\)|don\'t\(\))', memory)

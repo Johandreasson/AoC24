@@ -1,4 +1,4 @@
-with open(r'C:\Users\JANDRE21\projects\.vscode\AoC24\5\input.txt', "r") as f:
+with open(r'path/to/input.txt', "r") as f:
     input = f.read()
 
 ordering_rules =[split.split("|") for split in [rule for rule in input.split() if len(rule) < 6]]

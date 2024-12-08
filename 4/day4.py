@@ -1,4 +1,4 @@
-with open(r'C:\Users\JANDRE21\projects\.vscode\AoC24\4\input.txt', "r") as f:
+with open(r'path/to/input.txt', "r") as f:
     words = f.read().splitlines()
 xmas = 0
 cross = 0

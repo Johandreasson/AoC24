@@ -1,4 +1,4 @@
-with open(r'C:\Users\JANDRE21\projects\.vscode\AoC24\1\input.txt', "r") as f:
+with open(r'path/to/input.txt', "r") as f:
     total = 0
     id1 = []
     id2 = []

@@ -4,7 +4,7 @@ def dampen():
         unsafe.pop()
         return True
 
-with open(r'C:\Users\JANDRE21\projects\.vscode\AoC24\2\input.txt', "r") as f:
+with open(r'path/to/input.txt', "r") as f:
     safe = 0
     for _ in range(1000):
         report = f.readline().split()
