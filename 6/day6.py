@@ -19,7 +19,7 @@ def find_guard(tile_map):
                  return [y, x, "north"]
 
 
-def patrol(tile_map : list, guard_info, mark = True):
+def patrol(tile_map : list, guard_info):
     try:
         if guard_info[2] == "north" and tile_map[guard_info[0]-1][guard_info[1]] == "#":
             guard_info[2] = "east"
@@ -36,28 +36,26 @@ def patrol(tile_map : list, guard_info, mark = True):
     except IndexError:
         pass
 
-    tile_map, guard_info = update_map(tile_map, guard_info, mark)
-    return guard_info
+    tile_map, guard_info, new_x = update_map(tile_map, guard_info)
+    return guard_info, new_x
 
 
-def update_map(tile_map : list, guard_info, mark=True):
+def update_map(tile_map : list, guard_info):
     dir_dict = {"north" : ["^", 0, -1], "east" : [">", 1, 1], "south" : ["v", 0, 1], "west" : ["<", 1, -1]}
-    if mark:
-        tile_map[guard_info[0]][guard_info[1]] = "x" 
-    else:
-        tile_map[guard_info[0]][guard_info[1]] = "."
+    new_x = False
+    tile_map[guard_info[0]][guard_info[1]] = "x" 
     guard_info[dir_dict[guard_info[2]][1]] += dir_dict[guard_info[2]][2]
     if guard_info[0] in range(len(tile_map)) and guard_info[1] in range(len(tile_map[0])):
+        if tile_map[guard_info[0]][guard_info[1]] != "x":
+            new_x = True
         tile_map[guard_info[0]][guard_info[1]] = dir_dict[guard_info[2]][0]
-    return tile_map, guard_info
+    return tile_map, guard_info, new_x
 
 
 def count_tiles(tile_map):
     tiles = 0
     for row in tile_map:
-        for tile in row:
-            if tile == "x":
-                tiles += 1
+        tiles += row.count("x")
     return tiles
 
 
@@ -67,37 +65,42 @@ def print_map(tile_map):
         print("\n")
     print()
 
+
 def part1(tile_map, guard_info):
     while guard_info[0] in range(len(tiles)) and guard_info[1] in range(len(tiles[0])):
-        guard_info = patrol(tiles, guard_info)
+        guard_info, _ = patrol(tiles, guard_info)
         #print_map(tiles)
         #print(guard)
     return count_tiles(tile_map)
 
+
 def part2(inp, guard_start):
     total = 0
     for y, row in enumerate(inp):
+        print(y)
         for x, tile in enumerate(row):
-            tiles = [list(row) for row in inp]
-            guard_info = [info for info in guard_start]
-            if tile != "#":
-                tiles[y][x] = "#"
-                
-                guard_history = []
-                i = 0
-                while guard_info[0] in range(len(tiles)) and guard_info[1] in range(len(tiles[0])):
-                    guard_info = patrol(tiles, guard_info, False)
+            if tile == "x" and tile != "#":
+                guard_info = [info for info in guard_start]
+                tiles2 = [list(row) for row in input]
+                tiles2[y][x] = "#"
+                no_x_streak = 0
+                while guard_info[0] in range(len(tiles2)) and guard_info[1] in range(len(tiles2[0])):
+                    guard_info, new_x = patrol(tiles2, guard_info)
                     #print_map(tiles)
-                    i += 1
-                    if i > 50:
+                    if new_x:
+                        no_x_streak = 0
+                    else:
+                        no_x_streak += 1
+                    if no_x_streak > 5000:
                         total += 1
                         break
+
     return total
 
 if __name__ == "__main__":
-    input = test
+    #input = test
     tiles = [list(row) for row in input]
-
     guard = find_guard(tiles)
-    #part1(tiles, guard)
-    print(part2(input, guard))
+    guard2 = find_guard(tiles)
+    print(part1(tiles, guard))
+    print(part2(tiles, guard2))
