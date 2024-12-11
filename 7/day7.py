@@ -1,17 +1,5 @@
-import math
-
-with open(r'C:\Users\JANDRE21\Repos\AoC24\7\input.txt', "r") as f:
+with open(r'path/to/input', "r") as f:
     input = f.read().splitlines()
-
-test="""190: 10 19
-        3267: 81 40 27
-        83: 17 5
-        156: 15 6
-        7290: 6 8 6 15
-        161011: 16 10 13
-        192: 17 8 14
-        21037: 9 7 18 13
-        292: 11 6 16 20"""
 
 
 def part1():
@@ -60,7 +48,6 @@ def part2(new_sum):
     return new_sum
 
 if __name__ == "__main__":
-    #input = test.splitlines()
     invalid = []
     first_sum = part1()
     print(first_sum)
