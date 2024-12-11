@@ -39,20 +39,28 @@ def part2(new_sum):
     for equation in invalid:
         this_sum = int(equation.split(": ")[0])
         nums = [int(num) for num in equation.split(": ")[1].split()]
-
+        print(equation)
         for i in range(3**(len(nums)-1)):
             test_sum = nums[0]
             trinary = []
             temp = i
-            for _ in range(len(nums)-1):  # Convert the number to 4 trinary digits
-                trinary.append(temp % 3)  # Get the remainder (trinary digit)
-                temp //= 3  # Update the number for the next digit
-            print(trinary)
-            print("".join(map(str, reversed(trinary))))  # Print digits in reverse order
+            for _ in range(len(nums)-1): 
+                trinary.append(temp % 3) 
+                temp //= 3
+            for j in range(len(nums)-1):
+                if trinary[j] == 2:
+                    test_sum = int(str(test_sum) + str(nums[j+1]))
+                elif trinary[j] == 1:
+                    test_sum *= nums[j+1]
+                else:
+                    test_sum += nums[j+1]
+            if test_sum == this_sum:
+                new_sum += this_sum
+                break
     return new_sum
 
 if __name__ == "__main__":
-    input = test.splitlines()
+    #input = test.splitlines()
     invalid = []
     first_sum = part1()
     print(first_sum)
