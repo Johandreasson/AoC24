@@ -13,8 +13,7 @@ test="""............
 .........A..
 ............
 ............"""
-""" Expected result:
-......#....#
+exp_result = """......#....#
 ...#....0...
 ....#0....#.
 ..#....0....
@@ -39,6 +38,15 @@ def find_antennas(tilemap):
     return antennas
 
 def part1(tilemap):
+    global exp_result
+    exp_result = [list(tile) for tile in exp_result.splitlines()]
+    nodes = []
+    for i,row in enumerate(exp_result):
+        for j,tile in enumerate(row):
+            if tile == "#":
+                nodes.append([i,j])
+
+    
     antennas = find_antennas(tilemap)
     unique = set()
 
@@ -51,11 +59,11 @@ def part1(tilemap):
                 delta_y = abs(location[0]-antenna[1][j+1][0])
                 delta_x = abs(location[1]-antenna[1][j+1][1])
                 if location[0]+delta_y <= len(tilemap)-1 and location[1]+delta_x <= len(tilemap[0])-1:
-                    print(location[0]+delta_y, location[1]+delta_x)
+                    #print(location[0]+delta_y, location[1]+delta_x)
                     unique.add((location[0]+delta_y, location[1]+delta_x))
 
                 if location[0]-delta_y >= 0 and location[1]-delta_x >= 0:
-                    print(location[0]-delta_y, location[1]-delta_x)
+                    #print(location[0]-delta_y, location[1]-delta_x)
                     unique.add((location[0]-delta_y, location[1]-delta_x))
 
                 #print(, "-", location, "-", antenna[1][j+1], (location[0]+delta_y, location[1]+delta_x))
@@ -63,6 +71,7 @@ def part1(tilemap):
                 #    valid_pairs.append(location, antenna[1][j+1])
             #print()
     print(unique)
+    print(nodes)
     return len(unique)
 
 def part2():
